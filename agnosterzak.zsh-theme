@@ -69,7 +69,8 @@ prompt_end() {
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
   if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment black default "%(!.%{%F{yellow}%}.)%n@%m"
+    # prompt_segment black default "%(!.%{%F{yellow}%}.)%n@%m" # user@host
+    prompt_segment black default "%(!.%{%F{yellow}%}.)@%n" # @user
   fi
 }
 
@@ -260,7 +261,7 @@ prompt_virtualenv() {
 }
 
 prompt_time() {
-  prompt_segment white white "%{$fg_no_bold[black]%}%D{%a %e %b - %H:%M}%{$fg_no_bold[black]%}"
+  prompt_segment white white "%{$fg_no_bold[black]%}%D{%H:%M}%{$fg_no_bold[black]%}"
 }
 
 # Status:
@@ -283,6 +284,7 @@ build_prompt() {
   print -n "\n"
   prompt_status
   prompt_battery
+  prompt_time
   prompt_context
   prompt_virtualenv
   prompt_dir
@@ -291,7 +293,6 @@ build_prompt() {
   prompt_end
   CURRENT_BG='NONE'
   print -n "\n"
-  prompt_time
   prompt_end
 }
 
